@@ -1,3 +1,4 @@
+-- Active: 1706776188621@@127.0.0.1@3306@estate
 /* 
 # Entity
 - 사용자
@@ -42,3 +43,41 @@ table name : board
 - view_count : INT NN DEFAULT(0)
 - comment : TEXT 
 */
+
+CREATE DATABASE estate;
+
+USE estate;
+
+# 이메일 인증번호 테이블 생성
+CREATE TABLE email_auth_number(
+    email VARCHAR(100) PRIMARY KEY,
+    auth_nubmer VARCHAR(4) NOT NULL
+);
+
+# 유저 테이블 생성
+CREATE TABLE `user`(
+    user_id VARCHAR(50) PRIMARY KEY,
+    user_password VARCHAR(255) NOT NULL,
+    user_email VARCHAR(100) NOT NULL UNIQUE,
+    user_role VARCHAR(15) NOT NULL DEFAULT('ROLE_USER') 
+        CHECK(user_role IN('ROLE_USER', 'ROLE_ADMIN')),
+    join_path VARCHAR(5) NOT NULL DEFAULT('HOME') CHECK(JOIN_PATH IN('HOME', 'KAKAO', 'NAVER')),
+    CONSTRAINT user_email_fk FOREIGN KEY (user_email) REFERENCES email_auth_number(email)
+)
+
+# Q&A 게시물 테이블 생성
+CREATE TABLE board(
+    reception_number INT PRIMARY KEY AUTO_INCREMENT,
+    `status` BOOLEAN NOT NULL DEFAULT(FALSE),
+    title VARCHAR(100) NOT NULL,
+    contents TEXT NOT NULL,
+    writer_id VARCHAR(50) NOT NULL,
+    write_datetime DATETIME NOT NULL DEFAULT(NOW()),
+    view_count INT NOT NULL DEFAULT(0),
+    `comment` TEXT,
+    CONSTRAINT writer_id_fk FOREIGN KEY (writer_id) REFERENCES `user`(user_id)
+);
+
+## 개발자 계정 생성
+CREATE USER 'developer2'@'%' IDENTIFIED BY 'Plus82plus@@';
+GRANT ALL PRIVILEGES ON estate.* TO 'developer2'@'%';
