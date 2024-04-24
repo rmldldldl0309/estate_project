@@ -15,7 +15,7 @@ public class ResponseDto {
     private String code;
     private String message;
 
-    // 클래스로 직접 메서드 호출 > static
+    // static > 클래스로 직접 메서드 호출 가능하게
     public static ResponseEntity<ResponseDto> success() {
         ResponseDto responseBody = 
             new ResponseDto(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
