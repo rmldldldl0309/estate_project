@@ -28,20 +28,29 @@ public class JwtProvider {
 
     // JWT생성 메서드
     public String create (String userId) {
-        Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+
         // 만료일 = 현재시간 + 10시간
         Date expiredDate = Date.from(Instant.now().plus(10, ChronoUnit.HOURS));
+        String jwt = null;
 
-        // JWT 생성
-        String jwt = Jwts.builder()
-            .signWith(key, SignatureAlgorithm.HS256)
-            // 작성자
-            .setSubject(userId)
-            // 생성시간
-            .setIssuedAt(new Date())
-            // 만료시간
-            .setExpiration(expiredDate)
-            .compact();
+        try {
+            Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+
+            // JWT 생성
+            jwt = Jwts.builder()
+                .signWith(key, SignatureAlgorithm.HS256)
+                // 작성자
+                .setSubject(userId)
+                // 생성시간
+                .setIssuedAt(new Date())
+                // 만료시간
+                .setExpiration(expiredDate)
+                .compact();
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return null;
+        }
 
         return jwt;
     }
