@@ -25,7 +25,7 @@ export const QNA_UPDATE_ABSOULUTE_PATH = (rececptionNumber: string) => `${SERVIC
 
 // description : API URL PATH
 
-export const SERVER_DOMAIN_URL = 'http://localhost4000';
+export const SERVER_DOMAIN_URL = 'http://localhost:4000';
 export const SERVER_API_URL = `${SERVER_DOMAIN_URL}/api/v1`;
 export const SERVER_AUTH_MODULE_URL = `${SERVER_API_URL}/auth`;
 
@@ -34,4 +34,3 @@ export const ID_CHECK_REQUEST_URL = `${SERVER_AUTH_MODULE_URL}/id-check`;
 export const EMAIL_AUTH_REQUEST_URL = `${SERVER_AUTH_MODULE_URL}/email-auth`;
 export const EMAIL_AUTH_CHECK_REQUEST_URL = `${SERVER_AUTH_MODULE_URL}/email-auth-check`
 export const SIGN_UP_REQUEST_URL = `${SERVER_AUTH_MODULE_URL}/sign-up`;
-
