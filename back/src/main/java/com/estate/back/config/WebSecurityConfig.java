@@ -15,6 +15,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.estate.back.filter.JwtAuthenticationFilter;
+import com.estate.back.handler.OAuth2SuccessHandler;
+import com.estate.back.service.implementation.Oauth2UserServiceImplementation;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,6 +38,8 @@ JwtAuthenticationFilter 추가 (UsernamePasswordAuthenticationFilter 이전에 �
 public class WebSecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final Oauth2UserServiceImplementation oAuth2UserService;
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
     @Bean
     protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception{
@@ -50,6 +54,17 @@ public class WebSecurityConfig {
             )
             // 아래에서 작성한 CORS정책 설정 적용
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+
+            .oauth2Login(oauth2 -> oauth2
+                // 요청에 대한 주소
+                .authorizationEndpoint(endpoint -> endpoint.baseUri("/api/v1/auth/oauth2"))
+                // 콜백 받을 주소
+                .redirectionEndpoint(endpoint -> endpoint.baseUri("/oauth2/callback/*"))
+                // 정보를 받을 방법
+                .userInfoEndpoint(endpoint -> endpoint.userService(oAuth2UserService))
+                // 
+                .successHandler(oAuth2SuccessHandler)
+            )
             // JwtAuthenticationFilter 추가 (UsernamePasswordAuthenticationFilter 이전에 추가)
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
