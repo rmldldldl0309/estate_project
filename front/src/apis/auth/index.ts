@@ -6,7 +6,7 @@ import ResponseDto from "../response.dto";
 import { SignInResponseDto } from "./dto/response";
 
 // function : 로그인 API 함수
-export const SignInRequest = async (requestBody: SignInRequestDto) => {
+export const signInRequest = async (requestBody: SignInRequestDto) => {
     const result = await axios.post(SIGN_IN_REQUEST_URL, requestBody)
         .then(requestHandler<SignInResponseDto>)
         .catch(requestErrorHandler)
