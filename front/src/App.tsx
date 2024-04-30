@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './App.css';
 import { Route, Routes, useNavigate } from 'react-router';
-import { AUTH_ABSOULUTE_PATH, AUTH_PATH, LOCAL_ABSOULUTE_PATH, LOCAL_PATH, QNA_DETAIL_PATH, QNA_PATH, QNA_UPDATE_PATH, QNA_WRITE_PATH, RATIO_PATH, SERVICE_PATH, SNS_PATH } from './constant';
+import {  AUTH_ABSOULUTE_PATH, AUTH_PATH, LOCAL_ABSOLUTE_PATH, LOCAL_PATH, QNA_DETAIL_PATH, QNA_PATH, QNA_UPDATE_PATH, QNA_WRITE_PATH, RATIO_PATH, SERVICE_PATH, SNS_PATH } from './constant';
 import Authentication, { Sns } from './views/Authentication';
 import ServiceContainer from './layouts/ServiceContainer';
 import Local from './views/Service/Local';
@@ -26,7 +26,7 @@ function Index() {
   useEffect(() => {
 
     const accessToken = cookies.accessToken;
-    if (accessToken) navigator(LOCAL_ABSOULUTE_PATH);
+    if (accessToken) navigator(LOCAL_ABSOLUTE_PATH);
     else navigator(AUTH_ABSOULUTE_PATH);
 
   }, []);
