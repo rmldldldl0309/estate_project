@@ -1,5 +1,7 @@
 package com.estate.back.config;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -18,6 +22,9 @@ import com.estate.back.filter.JwtAuthenticationFilter;
 import com.estate.back.handler.OAuth2SuccessHandler;
 import com.estate.back.service.implementation.Oauth2UserServiceImplementation;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 /*
@@ -54,6 +61,11 @@ public class WebSecurityConfig {
             )
             // 아래에서 작성한 CORS정책 설정 적용
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            // white list 작업 / 요청에 대해 지정한 인원들에게만 권한 부여
+            .authorizeHttpRequests(request -> request
+                .requestMatchers("/", "/api/v1/auth/**", "/oauth2/callback/*").permitAll()
+                .anyRequest().authenticated()
+                )
 
             .oauth2Login(oauth2 -> oauth2
                 // 요청에 대한 주소
@@ -64,6 +76,10 @@ public class WebSecurityConfig {
                 .userInfoEndpoint(endpoint -> endpoint.userService(oAuth2UserService))
                 // 
                 .successHandler(oAuth2SuccessHandler)
+            )
+            // 인증 및 인가 실패 > AF
+            .exceptionHandling(exception -> exception
+                .authenticationEntryPoint(new AuthorizationFailedEntryPoint())
             )
             // JwtAuthenticationFilter 추가 (UsernamePasswordAuthenticationFilter 이전에 추가)
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
@@ -83,6 +99,20 @@ public class WebSecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
 
         return source;
+    }
+    
+}
+
+class AuthorizationFailedEntryPoint implements AuthenticationEntryPoint {
+
+    @Override
+    public void commence(HttpServletRequest request, HttpServletResponse response,
+            AuthenticationException authException) throws IOException, ServletException {
+        
+        response.setContentType("application/json");
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN); 
+        response.getWriter().write("{ \"code\":\"AF\",\"message\":\"Authorization Failed\" }");
+
     }
     
 }
