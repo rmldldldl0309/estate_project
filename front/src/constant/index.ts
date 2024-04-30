@@ -15,13 +15,13 @@ export const QNA_UPDATE_PATH = 'update/:rececptionNumber'
 
 export const AUTH_ABSOULUTE_PATH = AUTH_PATH;
 
-export const LOCAL_ABSOULUTE_PATH = `${SERVICE_PATH}/${LOCAL_PATH}`;
-export const RATIO_ABSOULUTE_PATH = `${SERVICE_PATH}/${RATIO_PATH}`;
-export const QNA_LIST_ABSOULUTE_PATH = `${SERVICE_PATH}/${QNA_PATH}`;
+export const LOCAL_ABSOLUTE_PATH = `${SERVICE_PATH}/${LOCAL_PATH}`;
+export const RATIO_ABSOLUTE_PATH = `${SERVICE_PATH}/${RATIO_PATH}`;
+export const QNA_LIST_ABSOLUTE_PATH = `${SERVICE_PATH}/${QNA_PATH}`;
 
-export const QNA_WRITE_ABSOULUTE_PATH = `${SERVICE_PATH}/${QNA_PATH}/${QNA_WRITE_PATH}`;
-export const QNA_DETAIL_ABSOULUTE_PATH = (rececptionNumber: string) => `${SERVICE_PATH}/${QNA_PATH}/${rececptionNumber}`
-export const QNA_UPDATE_ABSOULUTE_PATH = (rececptionNumber: string) => `${SERVICE_PATH}/${QNA_PATH}/update/${rececptionNumber}`
+export const QNA_WRITE_ABSOLUTE_PATH = `${SERVICE_PATH}/${QNA_PATH}/${QNA_WRITE_PATH}`;
+export const QNA_DETAIL_ABSOLUTE_PATH = (rececptionNumber: string) => `${SERVICE_PATH}/${QNA_PATH}/${rececptionNumber}`
+export const QNA_UPDATE_ABSOLUTE_PATH = (rececptionNumber: string) => `${SERVICE_PATH}/${QNA_PATH}/update/${rececptionNumber}`
 
 // description : API URL PATH
 
@@ -34,3 +34,6 @@ export const ID_CHECK_REQUEST_URL = `${SERVER_AUTH_MODULE_URL}/id-check`;
 export const EMAIL_AUTH_REQUEST_URL = `${SERVER_AUTH_MODULE_URL}/email-auth`;
 export const EMAIL_AUTH_CHECK_REQUEST_URL = `${SERVER_AUTH_MODULE_URL}/email-auth-check`
 export const SIGN_UP_REQUEST_URL = `${SERVER_AUTH_MODULE_URL}/sign-up`;
+
+export const SERVER_USER_MODULE_URL = `${SERVER_API_URL}/user`
+export const GET_SIGN_IN_USER_REQUEST_URL = `${SERVER_USER_MODULE_URL}/`
