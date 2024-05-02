@@ -1,0 +1,43 @@
+package com.estate.back.controller;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.estate.back.dto.request.board.PostBoardRequestDto;
+import com.estate.back.dto.response.ResponseDto;
+import com.estate.back.dto.response.board.GetBoardListResponseDto;
+import com.estate.back.service.BoardService;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequestMapping("api/v1/board")
+@RequiredArgsConstructor
+public class BoardController {
+
+    private final BoardService boardService;
+
+    @PostMapping("/")
+    public ResponseEntity<ResponseDto> postBoard (
+        @RequestBody @Valid PostBoardRequestDto requestBody, 
+        // filter를 거친 context내의 userId
+        @AuthenticationPrincipal String userId
+    ) {
+        ResponseEntity<ResponseDto> response = boardService.postBoard(requestBody, userId);
+        return response;
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<? super GetBoardListResponseDto> getBoardList () {
+        ResponseEntity<? super GetBoardListResponseDto> response = boardService.getBoardList();
+        return response;
+    }
+    
+
+}

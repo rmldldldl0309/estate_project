@@ -64,6 +64,7 @@ public class WebSecurityConfig {
             // white list 작업 / 요청에 대해 지정한 인원들에게만 권한 부여
             .authorizeHttpRequests(request -> request
                 .requestMatchers("/", "/api/v1/auth/**", "/oauth2/callback/*").permitAll()
+                .requestMatchers("api/v1/board/").hasRole("USER")
                 .anyRequest().authenticated()
                 )
 
