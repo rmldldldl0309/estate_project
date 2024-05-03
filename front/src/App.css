@@ -76,6 +76,26 @@
     opacity: 0.9;
 }
 
+.toggle {
+    background-image: url('./assets/img/toggle.png');
+    background-size: 100% 100%;
+
+    width: 35px;
+    height: 20px;
+
+    cursor: pointer;
+}
+
+.toggle-active {
+    background-image: url('./assets/img/toggle-active.png');
+    background-size: 100% 100%;
+
+    width: 35px;
+    height: 20px;
+
+    cursor: pointer;
+}
+
 .text-link {
     font-size: 16px;
     font-style: normal;
@@ -105,4 +125,39 @@
 
 .error {
     color: rgba(255, 84, 62, 1);
+}
+
+.primary-bedge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(58, 87, 232, 1);
+
+    width: 45px;
+    height: 20px;
+    border-radius: 10px;
+
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+
+    color: rgba(255, 255, 255, 1);
+}
+.primary-disable-bedge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(238, 238, 238, 1);
+
+    width: 45px;
+    height: 20px;
+    border-radius: 10px;
+
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+
+    color: rgba(138, 146, 166, 1);
 }

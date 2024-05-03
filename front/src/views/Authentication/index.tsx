@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react'
 import './style.css'
 
 import SignInBackground from 'src/assets/img/sign-in-background.png'
@@ -103,6 +103,12 @@ function SignIn ({onLinkClickHandler}: Props) {
         setMessage('');
     };
 
+    const enterKeyHandler = (event: KeyboardEvent) => {
+        if(event.key === 'Enter') {
+            return onSignInButtonClickHandler();
+        }
+    }
+
     const onSignInButtonClickHandler = () => {
 
         if (!id || !password) {
@@ -121,12 +127,12 @@ function SignIn ({onLinkClickHandler}: Props) {
     //                  render                  //
     return(
         <div className='authentication-contents'>
-            <div className='authentication-input-container'>
+            <div className='authentication-input-container' onKeyUp={enterKeyHandler}>
                 <InputBox label='아이디' type='text' value={id} placeholder='아이디를 입력해주세요' onChangeHandeler={onIdChangeHandler}/>
                 <InputBox label='비밀번호' type='password' value={password} placeholder='비밀번호를 입력해주세요' onChangeHandeler={onPasswordChangeHandler} message={message} error/>
             </div>
             <div className='authentication-button-container'>
-                <div className="primary-button full-width" onClick={onSignInButtonClickHandler}>로그인</div>
+                <div className="primary-button full-width" onClick={onSignInButtonClickHandler} onKeyDown={enterKeyHandler}>로그인</div>
                 <div className="text-link" onClick={onLinkClickHandler}>회원가입</div>
             </div>
             <div className='short-divider'></div>

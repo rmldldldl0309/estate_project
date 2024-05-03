@@ -20,8 +20,8 @@ export const RATIO_ABSOLUTE_PATH = `${SERVICE_PATH}/${RATIO_PATH}`;
 export const QNA_LIST_ABSOLUTE_PATH = `${SERVICE_PATH}/${QNA_PATH}`;
 
 export const QNA_WRITE_ABSOLUTE_PATH = `${SERVICE_PATH}/${QNA_PATH}/${QNA_WRITE_PATH}`;
-export const QNA_DETAIL_ABSOLUTE_PATH = (rececptionNumber: string) => `${SERVICE_PATH}/${QNA_PATH}/${rececptionNumber}`
-export const QNA_UPDATE_ABSOLUTE_PATH = (rececptionNumber: string) => `${SERVICE_PATH}/${QNA_PATH}/update/${rececptionNumber}`
+export const QNA_DETAIL_ABSOLUTE_PATH = (rececptionNumber: number) => `${SERVICE_PATH}/${QNA_PATH}/${rececptionNumber}`
+export const QNA_UPDATE_ABSOLUTE_PATH = (rececptionNumber: string | number) => `${SERVICE_PATH}/${QNA_PATH}/update/${rececptionNumber}`
 
 // description : API URL PATH
 
@@ -40,3 +40,11 @@ export const GET_SIGN_IN_USER_REQUEST_URL = `${SERVER_USER_MODULE_URL}/`
 
 export const SERVER_BOARD_MODULE_URL = `${SERVER_API_URL}/board`
 export const POST_BOARD_REQUEST_URL = `${SERVER_BOARD_MODULE_URL}/`
+export const GET_BOARD_LIST_URL = `${SERVER_BOARD_MODULE_URL}/list`
+export const GET_SEARCH_BOARD_LIST_URL = (searchWord: string) => `${SERVER_BOARD_MODULE_URL}/list/${searchWord}`
+
+// description : Board Const.
+export const COUNT_PER_PAGE = 1;
+// export const COUNT_PER_PAGE = 10;
+export const COUNT_PER_SECTION = 2;
+// export const COUNT_PER_SECTION = 10;

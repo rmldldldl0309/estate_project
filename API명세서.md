@@ -785,6 +785,107 @@ Content-Type: application/json;charset=UTF-8
 }
 ```
 
+**응답 : 실패 (인가 실패)**
+```bash
+HTTP/1.1 403 Forbidden
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "AF",
+  "message": "Authorization Failed."
+}
+```
+
+**응답 : 실패 (데이터베이스 오류)**
+```bash
+HTTP/1.1 500 Internal Server Error
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "DBE",
+  "message": "Database Error."
+}
+```
+
+***
+
+#### - Q&A 검색 게시물 리스트 불러오기
+
+##### 설명
+
+클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 검색어를 입력받고 요청을 보내면 작성일 기준 내림차순으로 검색어가 포함된 게시물 리스트를 반환합니다. 만약 리스트를 반환하는데 실패한다면 실패처리를 합니다. 인가 실패, 데이터베이스 에러가 발생할 수 있습니다.
+
+- method : **GET**  
+- URL : **/list/{searchWord}**  
+
+##### Request
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Authorization | 인증에 사용된 Bearer토큰 | O |
+
+###### Path Variable
+// Get, Delete 는 RequestBody 없다.
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| searchWord | String | 검색어 | O |
+
+###### Example
+
+```bash
+curl -v -X GET "http://localhost:4000/api/v1/board/list/{searchWord}" \
+ -H "Authrization: Bearer {JWT}"
+```
+
+##### Response
+
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Content-Type | 반환하는 Response Body의 Content Type (application/json) | O |
+
+###### Response Body
+
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| code | String | 사용자의 아이디 | O |
+| message | String | 사용자의 비밀번호 | O |
+| boardList | BoardListItem | Q&A 게시물 리스트 | O |
+
+**BoardListItem**
+| name | type | description | required |
+|---|:---:|:---:|:---:|
+| receptionNumber | int | 접수 번호 | O |
+| status | boolean | 상태 | O |
+| title | String | 제목 | O |
+| writerId | String | 작성자 아이디 (첫글자를 제외한 나머지 문자는 *) | O |
+| writeDateTime | String | 작성일 (yy.mm.dd) | O |
+| viewCount | int | 조회수 | O |
+
+###### Example
+
+**응답 성공**
+```bash
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+{
+  "code": "SU",
+  "message": "Success.",
+  "boardList": [
+    {
+      "receotuinNumber": 1,
+      "status": "테스트1",
+      "title": "테스트1",
+      "writerId": "a*****",
+      "writeDateTime": "24.05.02",
+      "viewCount": 0
+    }, ...
+  ]
+}
+```
+
 **응답 : 실패 (데이터 유효성 검사 실패)**
 ```bash
 HTTP/1.1 400 Bad Request
