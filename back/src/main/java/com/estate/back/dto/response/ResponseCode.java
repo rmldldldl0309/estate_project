@@ -22,6 +22,8 @@ public interface ResponseCode {
     String VALIDATION_FAILED = "VF";
     String DUPLICATED_ID = "DI";
     String DUPLICAT_EMAIL = "DE";
+    String NO_EXIST_BOARD = "NB";
+    String WRITTEN_COMMENT = "WC";
     String SIGN_IN_FAILED = "SF";
     String AUTHENTICATION_FAILED = "AF";
 

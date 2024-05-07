@@ -6,8 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.estate.back.dto.request.board.PostBoardRequestDto;
+import com.estate.back.dto.request.board.PostCommentRequestDto;
 import com.estate.back.dto.response.ResponseDto;
 import com.estate.back.dto.response.board.GetBoardListResponseDto;
+import com.estate.back.dto.response.board.GetBoardResponseDto;
 import com.estate.back.dto.response.board.GetSearchBoardListResponseDto;
 import com.estate.back.entity.BoardEntity;
 import com.estate.back.repository.BoardRepository;
@@ -74,5 +76,66 @@ public class BoardServiceImplementation implements BoardService{
         }
 
     }
-    
+
+    @Override
+    public ResponseEntity<? super GetBoardResponseDto> getBoard(int receptionNumber) {
+        
+        try {
+
+            BoardEntity boardEntity = boardRepository.findByReceptionNumber(receptionNumber);
+            if (boardEntity == null) return ResponseDto.noExistBoard();
+
+            return GetBoardResponseDto.success(boardEntity);     
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+    }
+
+    @Override
+    public ResponseEntity<ResponseDto> increaseViewCount(int receptionNumber) {
+
+        try {
+
+            BoardEntity boardEntity = boardRepository.findByReceptionNumber(receptionNumber);
+            if (boardEntity == null) return ResponseDto.noExistBoard();
+
+            boardEntity.increaseViewCount();
+            boardRepository.save(boardEntity);
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return ResponseDto.success();
+
+    }
+
+    @Override
+    public ResponseEntity<ResponseDto> postComment(PostCommentRequestDto dto, int receptionNumber) {
+
+        try {
+
+            BoardEntity boardEntity = boardRepository.findByReceptionNumber(receptionNumber);
+            if (boardEntity == null) return ResponseDto.noExistBoard();
+
+            boolean status = boardEntity.getStatus();
+            if (status) return ResponseDto.writtenComment();
+
+            String comment = dto.getComment();
+            boardEntity.setStatus(true);
+            boardEntity.setComment(comment);
+
+            boardRepository.save(boardEntity);
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return ResponseDto.success();
+
+    }
 }
