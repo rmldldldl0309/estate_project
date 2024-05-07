@@ -3,3 +3,8 @@ export interface PostBoardRequestDto {
     title: string;
     contents: string;
 }
+
+// description: Q&A 답글 작성 Request Body Dto //
+export interface PostCommentRequestDto {
+    comment: string;
+}

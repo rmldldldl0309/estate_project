@@ -8,8 +8,8 @@ export const RATIO_PATH = 'ratio';
 export const QNA_PATH = 'qna';
 
 export const QNA_WRITE_PATH = 'write'
-export const QNA_DETAIL_PATH = ':rececptionNumber'
-export const QNA_UPDATE_PATH = 'update/:rececptionNumber'
+export const QNA_DETAIL_PATH = ':receptionNumber'
+export const QNA_UPDATE_PATH = 'update/:receptionNumber'
 
 // description : Navigation 절대 URL PATH
 
@@ -40,8 +40,11 @@ export const GET_SIGN_IN_USER_REQUEST_URL = `${SERVER_USER_MODULE_URL}/`
 
 export const SERVER_BOARD_MODULE_URL = `${SERVER_API_URL}/board`
 export const POST_BOARD_REQUEST_URL = `${SERVER_BOARD_MODULE_URL}/`
+export const POST_COMMENT_REQUEST_URL = (receptionNumber: number | string) => `${SERVER_BOARD_MODULE_URL}/${receptionNumber}/comment`
 export const GET_BOARD_LIST_URL = `${SERVER_BOARD_MODULE_URL}/list`
 export const GET_SEARCH_BOARD_LIST_URL = (searchWord: string) => `${SERVER_BOARD_MODULE_URL}/list/${searchWord}`
+export const GET_BOARD_URL = (receptionNumber: number | string) => `${SERVER_BOARD_MODULE_URL}/${receptionNumber}`
+export const INCREASE_VIEW_COUNT_URL = (receptionNumber: number | string) => `${SERVER_BOARD_MODULE_URL}/${receptionNumber}/increase-view-count`
 
 // description : Board Const.
 export const COUNT_PER_PAGE = 1;
