@@ -20,8 +20,8 @@ export const RATIO_ABSOLUTE_PATH = `${SERVICE_PATH}/${RATIO_PATH}`;
 export const QNA_LIST_ABSOLUTE_PATH = `${SERVICE_PATH}/${QNA_PATH}`;
 
 export const QNA_WRITE_ABSOLUTE_PATH = `${SERVICE_PATH}/${QNA_PATH}/${QNA_WRITE_PATH}`;
-export const QNA_DETAIL_ABSOLUTE_PATH = (rececptionNumber: number) => `${SERVICE_PATH}/${QNA_PATH}/${rececptionNumber}`
-export const QNA_UPDATE_ABSOLUTE_PATH = (rececptionNumber: string | number) => `${SERVICE_PATH}/${QNA_PATH}/update/${rececptionNumber}`
+export const QNA_DETAIL_ABSOLUTE_PATH = (receptionNumber: string | number) => `${SERVICE_PATH}/${QNA_PATH}/${receptionNumber}`
+export const QNA_UPDATE_ABSOLUTE_PATH = (receptionNumber: string | number) => `${SERVICE_PATH}/${QNA_PATH}/update/${receptionNumber}`
 
 // description : API URL PATH
 
@@ -35,19 +35,21 @@ export const EMAIL_AUTH_REQUEST_URL = `${SERVER_AUTH_MODULE_URL}/email-auth`;
 export const EMAIL_AUTH_CHECK_REQUEST_URL = `${SERVER_AUTH_MODULE_URL}/email-auth-check`
 export const SIGN_UP_REQUEST_URL = `${SERVER_AUTH_MODULE_URL}/sign-up`;
 
-export const SERVER_USER_MODULE_URL = `${SERVER_API_URL}/user`
-export const GET_SIGN_IN_USER_REQUEST_URL = `${SERVER_USER_MODULE_URL}/`
+export const SERVER_USER_MODULE_URL = `${SERVER_API_URL}/user`;
+export const GET_SIGN_IN_USER_REQUEST_URL = `${SERVER_USER_MODULE_URL}/`;
 
-export const SERVER_BOARD_MODULE_URL = `${SERVER_API_URL}/board`
-export const POST_BOARD_REQUEST_URL = `${SERVER_BOARD_MODULE_URL}/`
-export const POST_COMMENT_REQUEST_URL = (receptionNumber: number | string) => `${SERVER_BOARD_MODULE_URL}/${receptionNumber}/comment`
-export const GET_BOARD_LIST_URL = `${SERVER_BOARD_MODULE_URL}/list`
-export const GET_SEARCH_BOARD_LIST_URL = (searchWord: string) => `${SERVER_BOARD_MODULE_URL}/list/${searchWord}`
-export const GET_BOARD_URL = (receptionNumber: number | string) => `${SERVER_BOARD_MODULE_URL}/${receptionNumber}`
-export const INCREASE_VIEW_COUNT_URL = (receptionNumber: number | string) => `${SERVER_BOARD_MODULE_URL}/${receptionNumber}/increase-view-count`
+export const SERVER_BOARD_MODULE_URL = `${SERVER_API_URL}/board`;
+export const POST_BOARD_REQUEST_URL = `${SERVER_BOARD_MODULE_URL}/`;
+export const POST_COMMENT_REQUEST_URL = (receptionNumber: number | string) => `${SERVER_BOARD_MODULE_URL}/${receptionNumber}/comment`;
+export const GET_BOARD_LIST_URL = `${SERVER_BOARD_MODULE_URL}/list`;
+export const GET_SEARCH_BOARD_LIST_URL = `${SERVER_BOARD_MODULE_URL}/list/search`;
+export const GET_BOARD_URL = (receptionNumber: number | string) => `${SERVER_BOARD_MODULE_URL}/${receptionNumber}`;
+export const PUT_BOARD_URL = (receptionNumber: number | string) => `${SERVER_BOARD_MODULE_URL}/${receptionNumber}`;
+export const INCREASE_VIEW_COUNT_URL = (receptionNumber: number | string) => `${SERVER_BOARD_MODULE_URL}/${receptionNumber}/increase-view-count`;
+export const DELETE_BOARD_URL = (receptionNumber: number | string) => `${SERVER_BOARD_MODULE_URL}/${receptionNumber}`;
 
 // description : Board Const.
-export const COUNT_PER_PAGE = 1;
+export const COUNT_PER_PAGE = 3;
 // export const COUNT_PER_PAGE = 10;
-export const COUNT_PER_SECTION = 2;
+export const COUNT_PER_SECTION = 3;
 // export const COUNT_PER_SECTION = 10;

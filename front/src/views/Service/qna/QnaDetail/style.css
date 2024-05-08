@@ -44,21 +44,25 @@
 }
 .qna-detail-contents-box {
     min-height: 207px;
+
     font-size: 18px;
     font-weight: 400;
     line-height: 24px;
+
     color: rgba(64, 64, 64, 1); 
+
+    white-space: pre-wrap;
 }
 
 
 .qna-detail-comment-write-box {
     display: flex;
+    align-items: start;
     gap: 12px;
 }
 .qna-datil-comment-text-area-box {
     flex-grow: 1;
-}
-.qna-datil-comment-text-area-box {
+
     border: 1px solid rgba(238, 238, 238, 1);
     border-radius: 6px;
     padding: 8px 16px;
@@ -97,6 +101,8 @@
     font-weight: 400;
     line-height: 24px;
     color: rgba(64, 64, 64, 1);
+
+    white-space: pre-wrap;
 }
 
 

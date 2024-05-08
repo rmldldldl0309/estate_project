@@ -8,3 +8,9 @@ export interface PostBoardRequestDto {
 export interface PostCommentRequestDto {
     comment: string;
 }
+
+// description: Q&A 수정 Request Body Dto //
+export interface PutBoardRequestDto {
+    title: string;
+    contents: string;
+}

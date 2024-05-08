@@ -1,11 +1,11 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import './style.css'
 import { useUserStore } from 'src/stores'
-import { getBoardRequest, increaseViewCountRequest, postCommentRequest } from 'src/apis/board';
+import { deleteBoardRequest, getBoardRequest, increaseViewCountRequest, postCommentRequest } from 'src/apis/board';
 import { useCookies } from 'react-cookie';
 import { useNavigate, useParams } from 'react-router';
 import ResponseDto from 'src/apis/response.dto';
-import { AUTH_ABSOULUTE_PATH, QNA_LIST_ABSOLUTE_PATH } from 'src/constant';
+import { AUTH_ABSOULUTE_PATH, QNA_DETAIL_ABSOLUTE_PATH, QNA_LIST_ABSOLUTE_PATH, QNA_UPDATE_ABSOLUTE_PATH } from 'src/constant';
 import { GetBoardResponseDto } from 'src/apis/board/dto/response';
 import { PostCommentRequestDto } from 'src/apis/board/dto/request';
 
@@ -13,8 +13,6 @@ import { PostCommentRequestDto } from 'src/apis/board/dto/request';
 export default function QnaDetail() {
 
     //                  state                   //
-    const commentRef = useRef<HTMLTextAreaElement | null>(null);
-
     const [cookies] = useCookies();
     const {receptionNumber} = useParams();
 
@@ -26,6 +24,7 @@ export default function QnaDetail() {
     const [contents, setContents] = useState<string>('');
     const [status, setStatus] = useState<boolean>(false)
     const [comment, setComment] = useState<string | null>(null);
+    const [commentRows, setCommentRows] = useState<number>(1);
 
     //                  function                  //
     const navigator = useNavigate();
@@ -100,6 +99,25 @@ export default function QnaDetail() {
         if (!receptionNumber || !cookies.accessToken) return;
         getBoardRequest(receptionNumber, cookies.accessToken).then(getBoardResponse);
     }
+
+    const deleteBoardResponse = (result: ResponseDto | null) => {
+
+        const message = 
+            !result ? '서버에 문제가 있습니다.' :
+            result.code === 'AF' ? '권한이 없습니다.' : 
+            result.code === 'VF' ? '올바르지 않은 접수번호 입니다.' :
+            result.code === 'NB' ? '존재하지 않는 게시물 입니다.' :
+            result.code === 'DBE' ? '서버에 문제가 있습니다.' : ''
+
+        if (!result || result.code !== 'SU') {
+            alert(message);
+            return;
+        }
+        
+        navigator(QNA_LIST_ABSOLUTE_PATH);
+
+    }
+
     //                  event handler                    //
     const onCommentChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
 
@@ -108,9 +126,11 @@ export default function QnaDetail() {
         const comment = event.target.value;
         setComment(comment);
 
-        if (!commentRef.current) return;
-        commentRef.current.style.height = 'auto';
-        commentRef.current.style.height = `${commentRef.current.scrollHeight}px`
+        // if (!commentRef.current) return;
+        // commentRef.current.style.height = 'auto';
+        // commentRef.current.style.height = `${commentRef.current.scrollHeight}px`
+        const commentRows = comment.split('\n').length;
+        setCommentRows(commentRows);
     }
 
     const onCommentSubmitClickHandler = () => {
@@ -120,6 +140,23 @@ export default function QnaDetail() {
         
         const requestBody: PostCommentRequestDto = {comment};
         postCommentRequest(receptionNumber, requestBody, cookies.accessToken).then(postCommentResonse);
+    }
+    
+    const onListClickHandler = () => {
+        navigator(QNA_LIST_ABSOLUTE_PATH);
+    }
+
+    const onUpdateClickHandler = () => {
+        if(!receptionNumber || loginUserId !== writerId || status) return;
+        navigator(QNA_UPDATE_ABSOLUTE_PATH(receptionNumber));
+    }
+
+    const onDeleteClickHandler = () => {
+        if(!receptionNumber || loginUserId !== writerId || !cookies.accessToken) return;
+        const isConfirm = window.confirm('정말로 삭제하시겠습니까?');
+        if (!isConfirm) return;
+
+        deleteBoardRequest(receptionNumber, cookies.accessToken).then(deleteBoardResponse);
     }
 
     //                  effect                  //
@@ -150,7 +187,7 @@ export default function QnaDetail() {
             {loginUserRole === 'ROLE_ADMIN' && !status &&
             <div className='qna-detail-comment-write-box'>
                 <div className='qna-datil-comment-text-area-box'>
-                    <textarea ref={commentRef} value={comment === null ? '' : comment} onChange={onCommentChangeHandler} placeholder='답글을 작성해 주세요.' className='qna-detail-textarea'></textarea>
+                    <textarea style={{height: `${28 * commentRows}px`}} value={comment === null ? '' : comment} onChange={onCommentChangeHandler} placeholder='답글을 작성해 주세요.' className='qna-detail-textarea'></textarea>
                 </div>
                 <div className='primary-button' onClick={onCommentSubmitClickHandler}>답글달기</div>
             </div>
@@ -163,12 +200,12 @@ export default function QnaDetail() {
             }
 
             <div className='qna-detail-button-box'>
-                <div className='primary-button'>목록 보기</div>
+                <div className='primary-button' onClick={onListClickHandler}>목록 보기</div>
 
-                {loginUserId === writerId &&
+                {loginUserId === writerId && loginUserRole === 'ROLE_USER' &&
                 <div className='qna-detail-owner-button-box'>
-                    <div className='second-button'>수정</div>
-                    <div className='error-button'>삭제</div>
+                    {!status && <div className='second-button' onClick={onUpdateClickHandler}>수정</div>}
+                    <div className='error-button' onClick={onDeleteClickHandler}>삭제</div>
                 </div>
                 }
             </div>
