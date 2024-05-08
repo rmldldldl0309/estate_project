@@ -64,6 +64,18 @@ public class ResponseDto {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
     }
 
+    public static ResponseEntity<ResponseDto> authorizationFailed() {
+        ResponseDto responseBody = 
+            new ResponseDto(ResponseCode.AUTHORIZATION_FAILED, ResponseMessage.AUTHORIZATION_FAILED);
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(responseBody);
+    }
+
+    public static ResponseEntity<ResponseDto> notFound() {
+        ResponseDto responseBody = 
+            new ResponseDto(ResponseCode.NOT_FOUND, ResponseMessage.NOT_FOUND);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseBody);
+    }
+
     public static ResponseEntity<ResponseDto> mailSendError() {
         ResponseDto responseBody = 
             new ResponseDto(ResponseCode.MAIL_SEND_FAILED, ResponseMessage.MAIL_SEND_FAILED);
