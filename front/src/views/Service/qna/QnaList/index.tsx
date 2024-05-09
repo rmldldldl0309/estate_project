@@ -198,7 +198,7 @@ export default function QnaList() {
         GetSearchBoardListRequest(searchWord, cookies.accessToken).then(getSearchBoardListResponse);
     }
 
-    const enterKeyHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+    const enterKeyHandler = (event: KeyboardEvent <HTMLInputElement>) => {
         if (event.key === "Enter") {
             onSearchButtonClickHandler();
         }
