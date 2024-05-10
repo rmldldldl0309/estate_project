@@ -48,6 +48,10 @@ export const PUT_BOARD_URL = (receptionNumber: number | string) => `${SERVER_BOA
 export const INCREASE_VIEW_COUNT_URL = (receptionNumber: number | string) => `${SERVER_BOARD_MODULE_URL}/${receptionNumber}/increase-view-count`;
 export const DELETE_BOARD_URL = (receptionNumber: number | string) => `${SERVER_BOARD_MODULE_URL}/${receptionNumber}`;
 
+export const SERVER_ESTATE_MODULE_URL = `${SERVER_API_URL}/estate`;
+export const GET_LOCAL_DATA_URL = (local: string) => `${SERVER_ESTATE_MODULE_URL}/local/${local}`;
+export const GET_RATIO_DATA_URL = (local: string) => `${SERVER_ESTATE_MODULE_URL}/ratio/${local}`;
+
 // description : Board Const.
 export const COUNT_PER_PAGE = 3;
 // export const COUNT_PER_PAGE = 10;
